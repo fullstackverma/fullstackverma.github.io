@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
+            /* Dark Theme (default) */
             --bg-primary: #0a0a0f;
             --bg-secondary: #11111a;
             --bg-tertiary: #1a1a2e;
@@ -31,6 +32,39 @@
             --transition-fast: 0.2s ease;
             --transition-normal: 0.4s ease;
             --transition-slow: 0.6s ease;
+            --nav-bg: rgba(10, 10, 15, 0.8);
+            --orb-opacity: 0.4;
+            --grid-color: rgba(0, 255, 136, 0.02);
+            --scanline-color: rgba(0, 0, 0, 0.05);
+            --hero-badge-bg: rgba(0, 255, 136, 0.1);
+            --stat-card-bg: transparent;
+        }
+
+        /* Light Theme - Soft Tech */
+        [data-theme="light"] {
+            --bg-primary: #f0f2f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e8ebef;
+            --fg-primary: #1a1d21;
+            --fg-secondary: #4a4e56;
+            --fg-muted: #7a7e88;
+            --accent-primary: #007b5e;
+            --accent-secondary: #006ba6;
+            --accent-tertiary: #c4441a;
+            --accent-glow: rgba(0, 123, 94, 0.3);
+            --card-bg: #ffffff;
+            --card-border: rgba(0, 123, 94, 0.12);
+            --gradient-1: linear-gradient(135deg, #007b5e 0%, #006ba6 100%);
+            --gradient-2: linear-gradient(135deg, #c4441a 0%, #a02d1a 100%);
+            --gradient-3: linear-gradient(135deg, #5a3dcc 0%, #006ba6 100%);
+            --shadow-glow: 0 0 30px rgba(0, 123, 94, 0.12);
+            --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.08);
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --orb-opacity: 0.15;
+            --grid-color: rgba(0, 123, 94, 0.03);
+            --scanline-color: transparent;
+            --hero-badge-bg: rgba(0, 123, 94, 0.08);
+            --stat-card-bg: #ffffff;
         }
 
         * {
@@ -110,7 +144,7 @@
             position: fixed;
             border-radius: 50%;
             filter: blur(80px);
-            opacity: 0.4;
+            opacity: var(--orb-opacity);
             pointer-events: none;
             z-index: 1;
             animation: orbFloat 20s infinite ease-in-out;
@@ -137,8 +171,8 @@
             z-index: 2;
             pointer-events: none;
             background-image: 
-                linear-gradient(rgba(0, 255, 136, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 136, 0.02) 1px, transparent 1px);
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 60px 60px;
             animation: gridMove 20s linear infinite;
         }
@@ -159,8 +193,8 @@
             pointer-events: none;
             background: repeating-linear-gradient(
                 0deg,
-                rgba(0, 0, 0, 0.05),
-                rgba(0, 0, 0, 0.05) 1px,
+                var(--scanline-color),
+                var(--scanline-color) 1px,
                 transparent 1px,
                 transparent 3px
             );
@@ -191,7 +225,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(10, 10, 15, 0.8);
+            background: var(--nav-bg);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--card-border);
         }
@@ -275,7 +309,7 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: rgba(0, 255, 136, 0.1);
+            background: var(--hero-badge-bg);
             border: 1px solid var(--card-border);
             border-radius: 100px;
             font-family: 'JetBrains Mono', monospace;
@@ -1351,7 +1385,13 @@
             <li><a href="#education">Education</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <a href="#contact" class="btn nav-cta">Get In Touch</a>
+        <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--card-border); background: var(--card-bg); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all var(--transition-fast); color: var(--fg-secondary);">
+                <i class="fas fa-moon" id="themeIcon" style="font-size: 1.1rem; transition: transform var(--transition-normal), opacity var(--transition-normal);"></i>
+                <i class="fas fa-sun" id="themeIconLight" style="font-size: 1.1rem; position: absolute; opacity: 0; transform: rotate(-90deg); transition: transform var(--transition-normal), opacity var(--transition-normal);"></i>
+            </button>
+            <a href="#contact" class="btn nav-cta">Get In Touch</a>
+        </div>
     </nav>
 
     <main>
@@ -2484,7 +2524,11 @@
                 this.speedX = (Math.random() - 0.5) * 0.3;
                 this.speedY = (Math.random() - 0.5) * 0.3;
                 this.opacity = Math.random() * 0.5 + 0.1;
-                this.color = Math.random() > 0.5 ? '#00ff88' : '#00d4ff';
+                // Use theme-aware colors
+                const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                this.color = isLight ? 
+                    (Math.random() > 0.5 ? '#007b5e' : '#006ba6') :
+                    (Math.random() > 0.5 ? '#00ff88' : '#00d4ff');
             }
             update() {
                 this.x += this.speedX;
@@ -2517,6 +2561,9 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             // Draw connections
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            const connectionColor = isLight ? 'rgba(0, 123, 94' : 'rgba(0, 255, 136';
+            
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -2526,7 +2573,7 @@
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(0, 255, 136, ${0.1 * (1 - dist / 120)})`;
+                        ctx.strokeStyle = `${connectionColor}, ${0.1 * (1 - dist / 120)})`;
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
                     }
@@ -2731,6 +2778,57 @@
                 submitBtn.disabled = false;
             }, 3000);
         });
+
+        // ===== THEME TOGGLE =====
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeIconLight = document.getElementById('themeIconLight');
+        const html = document.documentElement;
+
+        // Initialize theme from localStorage or system preference
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+            
+            if (!isDark) {
+                html.setAttribute('data-theme', 'light');
+                themeIcon.style.opacity = '0';
+                themeIcon.style.transform = 'rotate(90deg)';
+                themeIconLight.style.opacity = '1';
+                themeIconLight.style.transform = 'rotate(0deg)';
+            }
+        }
+        initTheme();
+
+        themeToggle.addEventListener('click', () => {
+            const isLight = html.getAttribute('data-theme') === 'light';
+            const newTheme = isLight ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Animate icons
+            if (newTheme === 'light') {
+                themeIcon.style.opacity = '0';
+                themeIcon.style.transform = 'rotate(90deg)';
+                themeIconLight.style.opacity = '1';
+                themeIconLight.style.transform = 'rotate(0deg)';
+            } else {
+                themeIcon.style.opacity = '1';
+                themeIcon.style.transform = 'rotate(0deg)';
+                themeIconLight.style.opacity = '0';
+                themeIconLight.style.transform = 'rotate(-90deg)';
+            }
+            
+            // Re-initialize particles with new theme colors
+            setTimeout(() => {
+                initParticles();
+            }, 300);
+        });
+
+        themeToggle.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        themeToggle.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
 
         // ===== PARALLAX ON SCROLL =====
         let ticking = false;
