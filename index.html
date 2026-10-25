@@ -2761,9 +2761,16 @@
                     }
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
 
         revealElements.forEach(el => revealObserver.observe(el));
+
+        // Fallback: reveal all sections after 3 seconds if IntersectionObserver fails
+        setTimeout(() => {
+            document.querySelectorAll('.reveal:not(.active)').forEach(el => {
+                el.classList.add('active');
+            });
+        }, 3000);
 
         // Hero is visible initially
         document.getElementById('hero').classList.add('active');
