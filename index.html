@@ -503,13 +503,13 @@
 
         /* Section Styles */
         section {
-            padding: 6rem 3rem;
+            padding: 3rem 3rem;
             max-width: 1400px;
             margin: 0 auto;
         }
 
         .section-header {
-            margin-bottom: 4rem;
+            margin-bottom: 2rem;
             text-align: center;
         }
 
@@ -1135,7 +1135,7 @@
             justify-content: center;
             gap: 1.5rem;
             flex-wrap: wrap;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
         }
 
         .contact-link {
@@ -1163,7 +1163,7 @@
 
         /* Footer */
         footer {
-            padding: 3rem;
+            padding: 2rem;
             text-align: center;
             border-top: 1px solid var(--card-border);
             background: var(--bg-secondary);
@@ -2370,7 +2370,6 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-brand">PV</div>
             <div class="footer-social">
                 <a href="https://www.linkedin.com/in/fullstackverma" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
@@ -2608,7 +2607,7 @@
                 { name: 'JPA/Hibernate', angle: 5.5, ring: 1, color: '#006ba6', category: 'Frameworks' },
                 
                 // Ring 3: Cloud & Architecture (index 11-16)
-                { name: 'AWS/EKS', angle: 0.0, ring: 2, color: '#ff6b35', category: 'Cloud' },
+                { name: 'AWS/EKS', angle: 6.0, ring: 2, color: '#ff6b35', category: 'Cloud' },
                 { name: 'Terraform', angle: 1.3, ring: 2, color: '#8338ec', category: 'Cloud' },
                 { name: 'Docker/K8s', angle: 2.3, ring: 2, color: '#007b5e', category: 'Cloud' },
                 { name: 'CI/CD', angle: 3.3, ring: 2, color: '#006ba6', category: 'Cloud' },
@@ -2666,14 +2665,14 @@
                 const textAnchor = isLeft ? 'end' : 'start';
                 
                 // Measure text width for background
-                const textWidth = skill.name.length * 6.5 + 8;
+                const textWidth = skill.name.length * 6 + 6;
                 const bgX = isLeft ? labelX - textWidth + 4 : labelX - 4;
                 
                 const labelBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
                 labelBg.setAttribute('x', bgX);
                 labelBg.setAttribute('y', labelY - 10);
                 labelBg.setAttribute('width', textWidth);
-                labelBg.setAttribute('height', '18');
+                labelBg.setAttribute('height', '16');
                 labelBg.setAttribute('rx', '4');
                 labelBg.setAttribute('fill', cardBg);
                 labelBg.setAttribute('stroke', cardBorder);
